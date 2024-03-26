@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "5.42.0"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "3.6.0"
+    }
   }
 }
 
@@ -72,4 +76,34 @@ output "ip" {
 
 output "ssh" {
   value = "admin@${aws_instance.ec2.public_ip}"
+}
+
+output "debian-ami" {
+  value = data.aws_ami.debian_latest.id
+}
+
+resource "random_password" "password" {
+  length  = 16
+  special = false
+  upper   = false
+}
+
+output "password" {
+  value     = random_password.password.result
+  sensitive = true
+}
+
+output "list" {
+  value = [
+    "one",
+    "two",
+    "three",
+  ]
+}
+
+output "map" {
+  value = {
+    foo = "bar"
+    baz = "qux"
+  }
 }
