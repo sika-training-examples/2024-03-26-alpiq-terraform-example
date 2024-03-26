@@ -202,3 +202,20 @@ resource "aws_s3_bucket" "demo" {
     ignore_changes = [tags]
   }
 }
+
+locals {
+  foo_enabled = false
+  foo         = local.foo_enabled ? random_string.foo[0].result : null
+}
+
+resource "random_string" "foo" {
+  count = local.foo_enabled ? 1 : 0
+
+  length  = 4
+  special = false
+}
+
+output "foo" {
+  value = local.foo
+}
+
