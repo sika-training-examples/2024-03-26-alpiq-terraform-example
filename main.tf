@@ -185,3 +185,20 @@ resource "aws_s3_bucket_acl" "example" {
 output "bucket" {
   value = [for el in aws_s3_bucket.example : el.bucket]
 }
+
+
+resource "aws_s3_bucket" "demo" {
+  for_each = {
+    "1" = {}
+    "2" = {}
+    "3" = {}
+  }
+
+  bucket = "${var.prefix}-demo-${each.key}"
+  tags = {
+    created_at = timestamp()
+  }
+  lifecycle {
+    ignore_changes = [tags]
+  }
+}
