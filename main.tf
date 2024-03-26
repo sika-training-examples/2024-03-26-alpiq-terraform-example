@@ -9,12 +9,23 @@ terraform {
       source  = "hashicorp/random"
       version = "3.6.0"
     }
+    null = {
+      source  = "hashicorp/null"
+      version = "3.2.2"
+    }
   }
+  required_version = ">= 1.5"
 }
 
-variable "aws_access_key" {}
-variable "aws_secret_key" {}
-variable "prefix" {}
+variable "aws_access_key" {
+  type = string
+}
+variable "aws_secret_key" {
+  type = string
+}
+variable "prefix" {
+  type = string
+}
 
 provider "aws" {
   region     = "eu-west-1"
