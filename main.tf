@@ -139,3 +139,49 @@ output "int" {
   value = [for el in random_integer.int : el.result]
 }
 
+locals {
+  s3_default = {
+    acl = "private"
+  }
+  buckets = {
+    # "0" = {}
+    "1" = merge(local.s3_default, {})
+    # "2" = {
+    #   acl = "private"
+    # }
+    "foo" = merge(local.s3_default, {
+      acl = "private"
+    })
+    "bar" = merge(local.s3_default, {
+      acl = "private"
+    })
+  }
+}
+
+resource "aws_s3_bucket" "example" {
+  for_each = local.buckets
+
+  bucket = "${var.prefix}-example-data-${each.key}"
+}
+
+
+resource "aws_s3_bucket_ownership_controls" "example" {
+  for_each = local.buckets
+
+  bucket = aws_s3_bucket.example[each.key].bucket
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_acl" "example" {
+  for_each = local.buckets
+
+  depends_on = [aws_s3_bucket_ownership_controls.example]
+  bucket     = aws_s3_bucket.example[each.key].bucket
+  acl        = each.value.acl
+}
+
+output "bucket" {
+  value = [for el in aws_s3_bucket.example : el.bucket]
+}
