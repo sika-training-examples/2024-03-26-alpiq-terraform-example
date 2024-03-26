@@ -316,3 +316,11 @@ output "net-foo-vpc-id" {
 output "net-foo-subnet-ids" {
   value = module.net-foo.subnet_ids
 }
+
+module "net-bar" {
+  source = "git::https://github.com/sika-training-examples/2024-03-26-alpiq-terraform-example.git//modules/net?ref=a9ed9cd"
+
+  name         = "${var.prefix}-bar"
+  cidr_block   = "10.20.0.0/16"
+  subnet_count = 3
+}
