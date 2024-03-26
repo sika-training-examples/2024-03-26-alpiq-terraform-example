@@ -261,3 +261,12 @@ output "cloud_init_example_ip" {
 output "cloud_init_example_url" {
   value = "http://${aws_instance.cloud_init_example.public_ip}"
 }
+
+
+resource "aws_s3_bucket" "aaa" {
+  bucket = "${var.prefix}-aaa"
+
+  lifecycle {
+    prevent_destroy = true
+  }
+}
