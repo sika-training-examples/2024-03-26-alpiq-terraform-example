@@ -115,3 +115,27 @@ output "map" {
     baz = "qux"
   }
 }
+
+# resource "aws_vpc" "main" {
+#   cidr_block = "10.10.0.0/16"
+# }
+
+# resource "aws_subnet" "main" {
+#   count = 3
+
+#   vpc_id     = aws_vpc.main.id
+#   cidr_block = cidrsubnet(aws_vpc.main.cidr_block, 8, count.index)
+
+# }
+
+resource "random_integer" "int" {
+  count = 4
+
+  min = 1
+  max = 100
+}
+
+output "int" {
+  value = [for el in random_integer.int : el.result]
+}
+
