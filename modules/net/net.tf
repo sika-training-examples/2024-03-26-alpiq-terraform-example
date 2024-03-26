@@ -20,7 +20,7 @@ variable "cidr_block" {
 variable "subnet_count" {
   type        = number
   description = "The number of subnets to create"
-  default     = 1
+  default     = 2
 }
 
 resource "aws_vpc" "this" {
