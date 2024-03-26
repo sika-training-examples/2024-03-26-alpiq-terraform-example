@@ -271,3 +271,27 @@ resource "aws_s3_bucket" "aaa" {
     prevent_destroy = true
   }
 }
+
+resource "aws_s3_bucket" "bucket" {
+  bucket = "${var.prefix}-xxx"
+}
+
+resource "aws_instance" "xxx" {
+  ami           = local.DEBIAN_AMI
+  instance_type = local.DEFAULT_INSTANCE_TYPE
+  key_name      = aws_key_pair.lab.key_name
+  security_groups = [
+    aws_security_group.default.name,
+  ]
+  subnet_id = "subnet-075223b7b5686846f"
+  tags = {
+    Name = "xxx"
+  }
+  vpc_security_group_ids = ["sg-03934e48a74f38ad5"]
+
+  lifecycle {
+    ignore_changes = [
+      ami,
+    ]
+  }
+}
