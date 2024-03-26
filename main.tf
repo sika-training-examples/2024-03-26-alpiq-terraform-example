@@ -130,7 +130,7 @@ output "map" {
 # }
 
 resource "random_integer" "int" {
-  count = 4
+  count = 5
 
   min = 1
   max = 100
