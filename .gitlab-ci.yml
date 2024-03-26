@@ -1,4 +1,4 @@
-image: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+image: registry.gitlab.com/gitlab-org/terraform-images/stable@sha256:d5b621ec092dd6ec67d2192b914af33e15db1fe5b7c9d543c1151008b4132e0c
 variables:
   TF_ROOT: ${CI_PROJECT_DIR}
   TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/default
