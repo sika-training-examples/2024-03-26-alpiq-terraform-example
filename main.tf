@@ -219,3 +219,45 @@ output "foo" {
   value = local.foo
 }
 
+
+resource "aws_instance" "cloud_init_example" {
+  lifecycle {
+    ignore_changes = [
+      ami,
+    ]
+  }
+
+  ami           = local.DEBIAN_AMI
+  instance_type = local.DEFAULT_INSTANCE_TYPE
+  key_name      = aws_key_pair.lab.key_name
+  security_groups = [
+    aws_security_group.default.name,
+  ]
+  user_data = <<-EOF
+#cloud-config
+ssh_pwauth: yes
+password: asdfasdf2020
+chpasswd:
+  expire: false
+write_files:
+- path: /html/index.html
+  permissions: "0755"
+  owner: root:root
+  content: |
+    <h1>Hello from Cloud Init & AWS</h1>
+runcmd:
+  - |
+    apt update
+    apt install -y curl sudo git nginx
+    curl -fsSL https://ins.oxs.cz/slu-linux-amd64.sh | sudo sh
+    cp /html/index.html /var/www/html/index.html
+EOF
+}
+
+output "cloud_init_example_ip" {
+  value = aws_instance.cloud_init_example.public_ip
+}
+
+output "cloud_init_example_url" {
+  value = "http://${aws_instance.cloud_init_example.public_ip}"
+}
