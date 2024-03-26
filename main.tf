@@ -295,3 +295,7 @@ resource "aws_instance" "xxx" {
     ]
   }
 }
+
+resource "aws_s3_bucket" "yyy" {
+  bucket = "${var.prefix}-yyy"
+}
