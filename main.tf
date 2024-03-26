@@ -318,7 +318,7 @@ output "net-foo-subnet-ids" {
 }
 
 module "net-bar" {
-  source = "git::https://github.com/sika-training-examples/2024-03-26-alpiq-terraform-example.git//modules/net?ref=a9ed9cd"
+  source = "git::https://github.com/sika-training-examples/2024-03-26-alpiq-terraform-example.git//modules/net?ref=415e72b"
 
   name       = "${var.prefix}-bar"
   cidr_block = "10.20.0.0/16"
