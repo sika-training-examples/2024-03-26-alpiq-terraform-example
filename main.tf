@@ -324,3 +324,12 @@ module "net-bar" {
   cidr_block   = "10.20.0.0/16"
   subnet_count = 3
 }
+
+module "net-baz" {
+  source  = "gitlab.sikademo.com/exampke/net/aws"
+  version = "0.1.0"
+
+  name         = "${var.prefix}-baz"
+  cidr_block   = "10.30.0.0/16"
+  subnet_count = 3
+}
