@@ -299,3 +299,20 @@ resource "aws_instance" "xxx" {
 resource "aws_s3_bucket" "yyy" {
   bucket = "${var.prefix}-yyy"
 }
+
+
+module "net-foo" {
+  source = "./modules/net"
+
+  name         = "${var.prefix}-foo"
+  cidr_block   = "10.10.0.0/16"
+  subnet_count = 3
+}
+
+output "net-foo-vpc-id" {
+  value = module.net-foo.vpc_id
+}
+
+output "net-foo-subnet-ids" {
+  value = module.net-foo.subnet_ids
+}
